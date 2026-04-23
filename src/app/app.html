@@ -1,0 +1,358 @@
+<a class="skip" href="#content">Skip to content</a>
+
+<header class="nav glass">
+  <div class="container nav__inner">
+    <a class="brand" href="#top" (click)="scrollTo('top', $event)" aria-label="Go to top">
+      <span class="brand__mark" aria-hidden="true"></span>
+      <span class="brand__name">{{ profile.name }}</span>
+    </a>
+
+    <nav class="nav__links" aria-label="Primary">
+      @for (link of navLinks; track link.id) {
+        <a class="nav__link" [class.is-active]="activeSection() === link.id" [href]="'#' + link.id" (click)="scrollTo(link.id, $event)">
+          {{ link.label }}
+        </a>
+      }
+    </nav>
+
+    <div class="nav__actions">
+      <button type="button" class="btn btn--ghost icon-btn" (click)="toggleTheme()" [attr.aria-label]="theme() === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'">
+        <span class="icon" aria-hidden="true">{{ theme() === 'dark' ? '☾' : '☼' }}</span>
+        <span class="sr-only">Toggle theme</span>
+      </button>
+      <a class="btn btn--primary" href="#contact" (click)="scrollTo('contact', $event)">Contact</a>
+    </div>
+  </div>
+</header>
+
+<main id="content">
+  <section id="top" class="hero">
+    <div class="hero__bg" aria-hidden="true"></div>
+    <div class="container hero__inner">
+      <div class="hero__content reveal">
+        <div class="hero__meta">
+          <span class="chip">
+            <span class="dot" aria-hidden="true"></span>
+            Open to impactful UI roles
+          </span>
+          <span class="chip">10+ years</span>
+          <span class="chip">Angular • Responsive Design • UI/UX</span>
+        </div>
+
+        <h1 class="hero__title">
+          <span class="hero__hello">Hi, I’m</span>
+          <span class="hero__name gradient-text">{{ profile.name }}</span>
+          <span class="hero__role">Senior UI Developer</span>
+        </h1>
+
+        <p class="hero__tagline">
+          I build premium, accessible interfaces with meticulous detail — performant, animation-rich, and recruiter-ready.
+        </p>
+
+        <div class="hero__cta">
+          <a class="btn btn--primary" href="#projects" (click)="scrollTo('projects', $event)">View Work</a>
+          <a class="btn" [href]="profile.resumeUrl" download>Download Resume</a>
+          <a class="btn btn--ghost" href="#contact" (click)="scrollTo('contact', $event)">Contact Me</a>
+        </div>
+
+        <div class="hero__stats">
+          @for (stat of heroStats; track stat.label) {
+            <div class="stat glass">
+              <div class="stat__value">{{ stat.value }}</div>
+              <div class="stat__label">{{ stat.label }}</div>
+            </div>
+          }
+        </div>
+      </div>
+
+      <aside class="hero__aside reveal">
+        <div class="profile glass card">
+          <div class="profile__top">
+            <div class="avatar" aria-hidden="true">
+              <div class="avatar__ring"></div>
+            </div>
+            <div class="profile__titles">
+              <div class="profile__name">{{ profile.name }}</div>
+              <div class="profile__sub">{{ profile.location }} • {{ profile.email }}</div>
+            </div>
+          </div>
+
+          <div class="profile__highlights">
+            @for (item of profileHighlights; track item) {
+              <div class="pill">{{ item }}</div>
+            }
+          </div>
+
+          <div class="profile__links">
+            @for (s of socials; track s.label) {
+              <a class="link" [href]="s.href" target="_blank" rel="noopener" [attr.aria-label]="s.label">
+                <span class="link__label">{{ s.label }}</span>
+                <span class="link__arrow" aria-hidden="true">↗</span>
+              </a>
+            }
+          </div>
+        </div>
+
+        <div class="hero__scroll">
+          <a class="scroll" href="#about" (click)="scrollTo('about', $event)" aria-label="Scroll to About section">
+            <span class="scroll__mouse" aria-hidden="true"></span>
+            <span class="scroll__text">Scroll</span>
+          </a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section id="about" class="section">
+    <div class="container">
+      <div class="section__head reveal">
+        <div class="kicker">About</div>
+        <h2 class="h2">UI engineering with taste, speed, and discipline.</h2>
+        <p class="lead">
+          Senior UI Developer with 10+ years of experience building production-grade design systems, accessible component libraries,
+          and complex web apps. I combine strong UI/UX instincts with deep frontend engineering to ship interfaces that feel effortless.
+        </p>
+      </div>
+
+      <div class="grid grid--2">
+        <div class="glass card reveal">
+          <h3 class="h3">What I’m known for</h3>
+          <ul class="list">
+            <li>High-fidelity UI implementation with animation polish</li>
+            <li>Angular architecture (signals, RxJS, state, performance)</li>
+            <li>React component patterns and design systems</li>
+            <li>Performance optimization (Core Web Vitals, bundle, rendering)</li>
+            <li>WCAG basics: keyboard, contrast, semantics, focus states</li>
+          </ul>
+        </div>
+
+        <div class="glass card reveal">
+          <h3 class="h3">Strengths</h3>
+          <div class="strengths">
+            @for (s of strengths; track s.title) {
+              <div class="strength">
+                <div class="strength__title">{{ s.title }}</div>
+                <div class="strength__desc">{{ s.desc }}</div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills" class="section">
+    <div class="container">
+      <div class="section__head reveal">
+        <div class="kicker">Skills</div>
+        <h2 class="h2">Modern frontend, UI/UX, and tooling.</h2>
+        <p class="lead">Interactive cards with animated meters (motion respects your OS settings).</p>
+      </div>
+
+      <div class="grid grid--3">
+        @for (cat of skillCategories; track cat.title) {
+          <div class="glass card reveal">
+            <div class="skill-head">
+              <div class="skill-title">{{ cat.title }}</div>
+              <div class="skill-sub">{{ cat.subtitle }}</div>
+            </div>
+
+            <div class="skill-list">
+              @for (sk of cat.items; track sk.name) {
+                <div class="meter" [attr.data-level]="sk.level">
+                  <div class="meter__row">
+                    <div class="meter__name">{{ sk.name }}</div>
+                    <div class="meter__pct">{{ sk.level }}%</div>
+                  </div>
+                  <div class="meter__track" role="progressbar" [attr.aria-valuenow]="sk.level" aria-valuemin="0" aria-valuemax="100">
+                    <div class="meter__fill" [style.width.%]="sk.level"></div>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="section">
+    <div class="container">
+      <div class="section__head reveal">
+        <div class="kicker">Portfolio</div>
+        <h2 class="h2">Selected work that’s clean, fast, and delightful.</h2>
+        <p class="lead">Hover for a premium lift and crisp glass highlight.</p>
+      </div>
+
+      <div class="filters reveal" role="tablist" aria-label="Project filters">
+        @for (f of projectFilters; track f) {
+          <button type="button" class="filter" role="tab" [attr.aria-selected]="activeFilter() === f" [class.is-active]="activeFilter() === f" (click)="setFilter(f)">
+            {{ f }}
+          </button>
+        }
+      </div>
+
+      <div class="grid grid--3">
+        @for (p of filteredProjects(); track p.title) {
+          <article class="project glass card reveal">
+            <div class="project__media" aria-hidden="true">
+              <div class="project__img" [style.background]="p.image"></div>
+            </div>
+            <div class="project__body">
+              <div class="project__top">
+                <h3 class="project__title">{{ p.title }}</h3>
+                <span class="badge">{{ p.type }}</span>
+              </div>
+              <p class="project__desc">{{ p.description }}</p>
+              <div class="project__stack">
+                @for (t of p.stack; track t) { <span class="tag">{{ t }}</span> }
+              </div>
+              <div class="project__links">
+                <a class="btn btn--ghost" [href]="p.demoUrl" target="_blank" rel="noopener">Live Demo</a>
+                <a class="btn btn--ghost" [href]="p.codeUrl" target="_blank" rel="noopener">Code</a>
+              </div>
+            </div>
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section id="experience" class="section">
+    <div class="container">
+      <div class="section__head reveal">
+        <div class="kicker">Experience</div>
+        <h2 class="h2">A timeline of impact.</h2>
+        <p class="lead">Clean vertical layout, readable on mobile, crisp on desktop.</p>
+      </div>
+
+      <div class="timeline glass card reveal" role="list">
+        @for (e of experience; track e.company) {
+          <div class="t-item" role="listitem">
+            <div class="t-dot" aria-hidden="true"></div>
+            <div class="t-content">
+              <div class="t-top">
+                <div class="t-role">{{ e.role }}</div>
+                <div class="t-meta">{{ e.company }} • {{ e.duration }}</div>
+              </div>
+              <ul class="t-bullets">
+                @for (b of e.achievements; track b) { <li>{{ b }}</li> }
+              </ul>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section id="testimonials" class="section">
+    <div class="container">
+      <div class="section__head reveal">
+        <div class="kicker">Testimonials</div>
+        <h2 class="h2">Trusted for quality and delivery.</h2>
+        <p class="lead">Optional slider with snap scrolling and keyboard-friendly buttons.</p>
+      </div>
+
+      <div class="testimonials reveal">
+        <div class="t-controls">
+          <button type="button" class="btn icon-btn" (click)="scrollTestimonials(-1)" aria-label="Previous testimonial">←</button>
+          <button type="button" class="btn icon-btn" (click)="scrollTestimonials(1)" aria-label="Next testimonial">→</button>
+        </div>
+
+        <div #testimonialTrack class="t-track" tabindex="0" aria-label="Testimonials">
+          @for (t of testimonials; track t.name) {
+            <figure class="t-card glass card">
+              <blockquote class="t-quote">“{{ t.quote }}”</blockquote>
+              <figcaption class="t-byline">
+                <div class="t-name">{{ t.name }}</div>
+                <div class="t-title">{{ t.title }}</div>
+              </figcaption>
+            </figure>
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section">
+    <div class="container">
+      <div class="section__head reveal">
+        <div class="kicker">Contact</div>
+        <h2 class="h2">Let’s build something premium.</h2>
+        <p class="lead">Simple, accessible form. (This demo logs to console; wire to your email/API later.)</p>
+      </div>
+
+      <div class="grid grid--2">
+        <form class="glass card reveal form" [formGroup]="contactForm" (ngSubmit)="submitContact()">
+          <div class="field">
+            <label class="label" for="name">Name</label>
+            <input id="name" class="input" type="text" formControlName="name" autocomplete="name" placeholder="Your name">
+            @if (contactForm.controls['name'].touched && contactForm.controls['name'].invalid) {
+              <div class="error">Please enter your name.</div>
+            }
+          </div>
+
+          <div class="field">
+            <label class="label" for="email">Email</label>
+            <input id="email" class="input" type="email" formControlName="email" autocomplete="email" placeholder="you@company.com">
+            @if (contactForm.controls['email'].touched && contactForm.controls['email'].invalid) {
+              <div class="error">Please enter a valid email.</div>
+            }
+          </div>
+
+          <div class="field">
+            <label class="label" for="message">Message</label>
+            <textarea id="message" class="input textarea" rows="5" formControlName="message" placeholder="Tell me about your role, project, or timeline..."></textarea>
+            @if (contactForm.controls['message'].touched && contactForm.controls['message'].invalid) {
+              <div class="error">Message should be at least 10 characters.</div>
+            }
+          </div>
+
+          <div class="form__actions">
+            <button class="btn btn--primary" type="submit" [disabled]="contactForm.invalid || isSending()">
+              {{ isSending() ? 'Sending…' : 'Send Message' }}
+            </button>
+            <span class="muted">Or email: <a class="inline-link" [href]="'mailto:' + profile.email">{{ profile.email }}</a></span>
+          </div>
+        </form>
+
+        <div class="glass card reveal contact-card">
+          <h3 class="h3">Social</h3>
+          <p class="lead small">Prefer links? Here are the essentials.</p>
+          <div class="contact-links">
+            @for (s of socials; track s.label) {
+              <a class="link link--big" [href]="s.href" target="_blank" rel="noopener">
+                <span class="link__label">{{ s.label }}</span>
+                <span class="link__hint">{{ s.hint }}</span>
+                <span class="link__arrow" aria-hidden="true">↗</span>
+              </a>
+            }
+          </div>
+
+          <div class="contact-meta">
+            <div class="meta-row">
+              <span class="meta-k">Location</span>
+              <span class="meta-v">{{ profile.location }}</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-k">Availability</span>
+              <span class="meta-v">Immediate / 2–4 weeks</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__left">
+      <div class="footer__brand">{{ profile.name }}</div>
+      <div class="footer__muted">© {{ year }} • Built with Angular 20 • Accessible, responsive, and fast.</div>
+    </div>
+    <div class="footer__right">
+      <a class="nav__link" href="#top" (click)="scrollTo('top', $event)">Back to top</a>
+    </div>
+  </div>
+</footer>
